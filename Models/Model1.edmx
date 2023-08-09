@@ -1,0 +1,121 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="surtidoradbModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <Function Name="SP_Actualizar" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="IdPer" Type="int" Mode="In" />
+          <Parameter Name="Nombre" Type="varchar" Mode="In" />
+          <Parameter Name="Paterno" Type="varchar" Mode="In" />
+          <Parameter Name="Materno" Type="varchar" Mode="In" />
+          <Parameter Name="RFC" Type="varchar" Mode="In" />
+          <Parameter Name="FNacimiento" Type="date" Mode="In" />
+          <Parameter Name="Usuario" Type="int" Mode="In" />
+        </Function>
+        <Function Name="SP_Eliminar" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="IdPer" Type="int" Mode="In" />
+        </Function>
+        <Function Name="SP_NuevaPersona" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Nombre" Type="varchar" Mode="In" />
+          <Parameter Name="Paterno" Type="varchar" Mode="In" />
+          <Parameter Name="Materno" Type="varchar" Mode="In" />
+          <Parameter Name="RFC" Type="varchar" Mode="In" />
+          <Parameter Name="FNacimiento" Type="date" Mode="In" />
+          <Parameter Name="Usuario" Type="int" Mode="In" />
+        </Function>
+        <EntityContainer Name="surtidoradbModelStoreContainer" />
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="surtidoradbModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="surtidoradbEntities" annotation:LazyLoadingEnabled="true" >
+          <FunctionImport Name="SP_Actualizar" ReturnType="Collection(surtidoradbModel.SP_Actualizar_Result)">
+            <Parameter Name="IdPer" Mode="In" Type="Int32" />
+            <Parameter Name="Nombre" Mode="In" Type="String" />
+            <Parameter Name="Paterno" Mode="In" Type="String" />
+            <Parameter Name="Materno" Mode="In" Type="String" />
+            <Parameter Name="RFC" Mode="In" Type="String" />
+            <Parameter Name="FNacimiento" Mode="In" Type="DateTime" />
+            <Parameter Name="Usuario" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="SP_Eliminar" ReturnType="Collection(surtidoradbModel.SP_Eliminar_Result)">
+            <Parameter Name="IdPer" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="SP_NuevaPersona" ReturnType="Collection(surtidoradbModel.SP_NuevaPersona_Result)">
+            <Parameter Name="Nombre" Mode="In" Type="String" />
+            <Parameter Name="Paterno" Mode="In" Type="String" />
+            <Parameter Name="Materno" Mode="In" Type="String" />
+            <Parameter Name="RFC" Mode="In" Type="String" />
+            <Parameter Name="FNacimiento" Mode="In" Type="DateTime" />
+            <Parameter Name="Usuario" Mode="In" Type="Int32" />
+          </FunctionImport>
+        </EntityContainer>
+        <ComplexType Name="SP_Actualizar_Result">
+          <Property Type="Int32" Name="ERROR" Nullable="true" />
+          <Property Type="String" Name="MENSAJEERROR" Nullable="false" MaxLength="16" />
+        </ComplexType>
+        <ComplexType Name="SP_Eliminar_Result">
+          <Property Type="Int32" Name="ERROR" Nullable="true" />
+          <Property Type="String" Name="MENSAJEERROR" Nullable="false" MaxLength="500" />
+        </ComplexType>
+        <ComplexType Name="SP_NuevaPersona_Result">
+          <Property Type="Int32" Name="ERROR" Nullable="true" />
+          <Property Type="String" Name="MENSAJEERROR" Nullable="false" MaxLength="16" />
+        </ComplexType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="surtidoradbModelStoreContainer" CdmEntityContainer="surtidoradbEntities" >
+          <FunctionImportMapping FunctionImportName="SP_Actualizar" FunctionName="surtidoradbModel.Store.SP_Actualizar">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="surtidoradbModel.SP_Actualizar_Result">
+                <ScalarProperty Name="ERROR" ColumnName="ERROR" />
+                <ScalarProperty Name="MENSAJEERROR" ColumnName="MENSAJEERROR" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="SP_Eliminar" FunctionName="surtidoradbModel.Store.SP_Eliminar">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="surtidoradbModel.SP_Eliminar_Result">
+                <ScalarProperty Name="ERROR" ColumnName="ERROR" />
+                <ScalarProperty Name="MENSAJEERROR" ColumnName="MENSAJEERROR" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="SP_NuevaPersona" FunctionName="surtidoradbModel.Store.SP_NuevaPersona">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="surtidoradbModel.SP_NuevaPersona_Result">
+                <ScalarProperty Name="ERROR" ColumnName="ERROR" />
+                <ScalarProperty Name="MENSAJEERROR" ColumnName="MENSAJEERROR" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
