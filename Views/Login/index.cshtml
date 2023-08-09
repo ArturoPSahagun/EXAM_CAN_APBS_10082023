@@ -1,8 +1,24 @@
 ﻿
 @{
-    ViewBag.Title = "index";
+    ViewBag.Title = "Login";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>index</h2>
+<form>
 
+    <div class="form-outline mb-4">
+        <label class="form-label" for="usuario-input">Usuario</label>
+        <input type="text" id="usuario-inpu" class="form-control" />
+    </div>
+
+
+    <div class="form-outline mb-4">
+        <label class="form-label" for="password-input">Password</label>
+        <input type="password" id="password-input" class="form-control" />
+    </div>
+
+
+    <button type="button" class="btn btn-primary btn-block mb-4">Entrar</button>
+
+
+</form>

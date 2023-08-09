@@ -1,5 +1,6 @@
 bin/
 Content/
 obj/
-Scripts/
+Scripts/*
+!Scripts/Custom
 
