@@ -1,0 +1,58 @@
+﻿
+@{
+    ViewBag.Title = "Eliminar";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+
+
+<form>
+
+    <h3>Eliminar registro de persona</h3>
+
+    <div class="form-outline mb4">
+        <label class="form-label" for="idper-input">ID</label>
+        <input type="number" id="idper-input" class="form-control" />
+    </div>
+
+    <button type="button" onclick=" eliminarPersona()" class="btn btn-primary btn-block mb-4">Eliminar</button>
+
+    <div id="alerta-container">
+
+    </div>
+
+</form>
+
+
+<script>
+    function eliminarPersona() {
+        var fnac = new Date($('#fnacimiento-input').val());
+        let senddata = {
+            "IdPer": $("#idper-input").val()
+        }
+
+
+
+        $.ajax({
+            type: 'DELETE',
+            url: '/PersonaApi/EliminarPersona',
+            data: JSON.stringify(senddata),
+            success: function (data) {
+                let respuesta = JSON.parse(data);
+                crearAlerta(respuesta["Id"], respuesta["Mensaje"]);
+            },
+            error: function () {
+                alert("Algo salio Mal");
+            }
+        });
+
+    }
+
+    function crearAlerta(id, mensaje) {
+        $("#alerta-container").empty();
+        $("#alerta-container").append(`<div class = "alert alert-${id > 0 ? "success" : "danger"}" role = "alert">
+                             ${id <= 0 ? "Error " + id : ""} ${mensaje} ${id > 0 ? "ID : " + id : ""}
+                        </div>`);
+    }
+</script>

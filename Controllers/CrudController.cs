@@ -21,6 +21,11 @@ namespace surtidora_api.Controllers
         {
             return View();
         }
+        public ActionResult Eliminar()
+        {
+            return View();
+        }
+
 
 
     }
