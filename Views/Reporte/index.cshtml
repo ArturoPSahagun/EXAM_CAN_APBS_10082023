@@ -6,7 +6,7 @@
 
 <h2>REPORTES</h2>
 
-
+<button id="boton-descargar" onclick="descargarReporte()" class="btn btn-success btn-block mb-4">Descargar reporte</button>
 
 <div id="tabla-container">
     <table id="tabla-reporte" class="table" style="text-align:center">
@@ -117,6 +117,25 @@
     }
 
 
-
-
+    function jsonACsv (data) {
+        csvRows = [];
+        const headers = Object.keys(data[0]);
+        csvRows.push(headers.join(','));
+        for (const row of data) {
+            const values = headers.map(e => {
+                return row[e]
+            })
+            csvRows.push(values.join(','))
+        }
+        return csvRows.join('\n')
+    }
+    function descargarReporte() {
+        const data = jsonACsv(globalData);
+        const blob = new Blob([data], { type: 'text/csv' });
+        const url = window.URL.createObjectURL(blob)
+        const a = document.createElement('a')
+        a.setAttribute('href', url)
+        a.setAttribute('download', 'PERSONA_CANSD_2023.csv');
+        a.click()
+    }
 </script>
