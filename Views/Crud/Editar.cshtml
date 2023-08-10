@@ -73,6 +73,7 @@
             type: 'PUT',
             url: '/PersonaApi/ActualizarPersona',
             data: JSON.stringify(senddata),
+            headers: { 'Authorization': sessionStorage.getItem("token") },
             success: function (data) {
                 let respuesta = JSON.parse(data);
                 crearAlerta(respuesta["Id"], respuesta["Mensaje"]);

@@ -38,6 +38,7 @@
             type: 'DELETE',
             url: '/PersonaApi/EliminarPersona',
             data: JSON.stringify(senddata),
+            headers: { 'Authorization': sessionStorage.getItem("token") },
             success: function (data) {
                 let respuesta = JSON.parse(data);
                 crearAlerta(respuesta["Id"], respuesta["Mensaje"]);
