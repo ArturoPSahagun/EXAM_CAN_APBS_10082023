@@ -4,14 +4,20 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Net.Http;
+using System.Net.Http.Headers;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Caching;
 using System.Web.Mvc;
+using System.Web.UI.WebControls;
+
 
 namespace surtidora_api.Controllers
 {
     public class PersonaApiController : Controller
     {
+
 
         // POST: PersonaApi/NuevaPersona
         [HttpPost]
@@ -23,7 +29,14 @@ namespace surtidora_api.Controllers
                 string b = stream.ReadToEnd();
                 body = JObject.Parse(b);
             }
+
             var token = Request.Headers["Authorization"];
+            if(!Auth.Check(token))
+            {
+                Respuesta r = new Respuesta(0, "Error al autorizar");
+                return (JObject)JToken.FromObject(r);
+            }
+
             Respuesta senddata;
             using (surtidoradbEntities db = new surtidoradbEntities())
             {
@@ -38,8 +51,7 @@ namespace surtidora_api.Controllers
                                                    ), (int)body.GetValue("Usuario")
                                               );
                 var fresp = resp.First();
-                //senddata = new Respuesta((int)fresp.ERROR, fresp.MENSAJEERROR);
-                senddata = new Respuesta((int)fresp.ERROR, token);
+                senddata = new Respuesta((int)fresp.ERROR, fresp.MENSAJEERROR);
             }
 
             return (JObject)JToken.FromObject(senddata);
@@ -55,6 +67,13 @@ namespace surtidora_api.Controllers
             {
                 string b = stream.ReadToEnd();
                 body = JObject.Parse(b);
+            }
+
+            var token = Request.Headers["Authorization"];
+            if (!Auth.Check(token))
+            {
+                Respuesta r = new Respuesta(0, "Error al autorizar");
+                return (JObject)JToken.FromObject(r);
             }
 
             Respuesta senddata;
@@ -88,6 +107,13 @@ namespace surtidora_api.Controllers
             {
                 string b = stream.ReadToEnd();
                 body = JObject.Parse(b);
+            }
+
+            var token = Request.Headers["Authorization"];
+            if (!Auth.Check(token))
+            {
+                Respuesta r = new Respuesta(0, "Error al autorizar");
+                return (JObject)JToken.FromObject(r);
             }
 
             Respuesta senddata;
