@@ -166,6 +166,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Controllers\PersonaApiController.cs" />
+    <Compile Include="Controllers\ReporteController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -284,10 +285,10 @@
     <Content Include="Views\Crud\Index.cshtml" />
     <Content Include="Views\Crud\Editar.cshtml" />
     <Content Include="Views\Crud\Eliminar.cshtml" />
+    <Content Include="Views\Reporte\index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Views\Ejemplo\" />
     <Folder Include="Views\PersonaApi\" />
   </ItemGroup>
   <ItemGroup>
