@@ -1,8 +1,122 @@
 ﻿
 @{
-    ViewBag.Title = "index";
+    ViewBag.Title = "Reporte";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 <h2>REPORTES</h2>
 
+
+
+<div id="tabla-container">
+    <table id="tabla-reporte" class="table" style="text-align:center">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>ID</th>
+                <th>Nombre(s)</th>
+                <th>Apellido Paterno</th>
+                <th>Apellido Materno</th>
+                <th>Nacimiento</th>
+                <th>RFC</th>
+                <th>Usuario</th>
+                <th>Registro</th>
+                <th>Actualización</th>
+                <th>Activo</th>
+            </tr>
+        </thead>
+        <tbody>
+
+        </tbody>
+    </table>
+    <div style="display:flex; justify-content:center; align-content:center">
+        <button id="boton-atras" onclick="retrocederPagina()" class="btn btn-primary btn-block mb-4"><</button>
+        <span id="pagina-info" style="margin:0 10px 0 10px"></span>
+        <button id="boton-adelante" onclick="avanzarPagina()" class="btn btn-primary btn-block mb-4">></button>
+    </div>
+</div>
+
+
+@Scripts.Render("~/bundles/jquery")
+
+<script>
+    const REGI_POR_PAG = 20;
+    let globalData;
+    let currenPage = 1;
+    let maxPages;
+    $.ajax({
+        type: 'POST',
+        url: 'https://sdcentro.surtidoradepartamental.com:8077/ServiciosKosmos/api/serv/Reporte',
+        headers: { 'Authorization': "Bearer " + sessionStorage.getItem("token") },
+        success: function (respuesta) {
+            globalData = JSON.parse(respuesta);
+
+            maxPages = Math.ceil(globalData.length / REGI_POR_PAG);
+            console.log(maxPages);
+            renderTable();
+
+        },
+        error: function () {
+            alert("Algo salio Mal");
+        }
+    });
+
+    function renderTable() {
+        let last = currenPage * REGI_POR_PAG;
+        let first = last - REGI_POR_PAG;
+        $("#tabla-reporte tbody").empty();
+
+
+        for (let i = first; i < last; i++) {
+            let row = globalData[i];
+            if (row == undefined)
+                break;
+            $("#tabla-reporte tbody").append(
+                `
+                <tr>
+                    <th>${i + 1}</th>
+                    <td>${row["IdPer"]}</td>
+                    <td>${row["Nombre"]}</td>
+                    <td>${row["Paterno"]}</td>
+                    <td>${row["Materno"]}</td>
+                    <td>${row["FNacimiento"].split("T")[0]}</td>
+                    <td>${row["RFC"]}</td>
+                    <td>${row["Usuario"]}</td>
+                    <td>${row["FRegistro"]}</td>
+                    <td>${row["FActualizazion"] == undefined ? "-" : row["FActualizacion"]}</td>
+                    <td>${row["Activo"] ? "Si" : "No"}</td>
+
+                </tr>
+                `
+            )
+        }
+        renderPageInfo();
+    }
+
+    function renderPageInfo() {
+        if (currenPage == 1) {
+            $("#boton-atras").attr("disabled", true);
+        } else {
+            $("#boton-atras").attr("disabled", false);
+        }
+        if (currenPage == maxPages) {
+            $("#boton-adelante").attr("disabled", true);
+        } else {
+            $("#boton-adelante").attr("disabled", false);
+        }
+        $("#pagina-info").text(`Pagína ${currenPage} de ${maxPages}`);
+    }
+
+    function retrocederPagina() {
+        currenPage--;
+        renderTable();
+    }
+    function avanzarPagina() {
+        currenPage++;
+        renderTable();
+    }
+
+
+
+
+</script>
