@@ -17,6 +17,11 @@ namespace surtidora_api.Controllers
         {
             return View();
         }
+        public ActionResult Editar()
+        {
+            return View();
+        }
+
 
     }
 }
