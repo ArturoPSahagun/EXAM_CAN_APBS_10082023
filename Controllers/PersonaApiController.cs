@@ -12,22 +12,6 @@ namespace surtidora_api.Controllers
 {
     public class PersonaApiController : Controller
     {
-        // GET: PersonaApi
-        public JObject Index()
-        {
-            Respuesta r = new Respuesta(0, "nueva api index!!!!");
-
-            return (JObject)JToken.FromObject(r);
-        }
-
-        // GET: PersonaApi/Create
-        public JObject Create()
-        {
-            Respuesta r = new Respuesta(0, "Nueva API crear!!!!");
-
-
-            return (JObject)JToken.FromObject(r);
-        }
 
         // POST: PersonaApi/NuevaPersona
         [HttpPost]
@@ -39,7 +23,7 @@ namespace surtidora_api.Controllers
                 string b = stream.ReadToEnd();
                 body = JObject.Parse(b);
             }
-
+            var token = Request.Headers["Authorization"];
             Respuesta senddata;
             using (surtidoradbEntities db = new surtidoradbEntities())
             {
@@ -54,7 +38,8 @@ namespace surtidora_api.Controllers
                                                    ), (int)body.GetValue("Usuario")
                                               );
                 var fresp = resp.First();
-                senddata = new Respuesta((int)fresp.ERROR, fresp.MENSAJEERROR);
+                //senddata = new Respuesta((int)fresp.ERROR, fresp.MENSAJEERROR);
+                senddata = new Respuesta((int)fresp.ERROR, token);
             }
 
             return (JObject)JToken.FromObject(senddata);

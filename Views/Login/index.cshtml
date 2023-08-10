@@ -18,10 +18,36 @@
     </div>
 
 
-    <button type="button" class="btn btn-primary btn-block mb-4">Entrar</button>
-    <a href="~/Crud/Crear">CREAR</a>
-
+    <button type="button" onclick="autenticar()" class="btn btn-primary btn-block mb-4">Entrar</button>
 </form>
 <script>
-    alert("hola mundo");
+    function autenticar() {
+        let senddata = {
+            "UserName": $("#usuario-input").val(),
+            "Password": $("#password-input").val()
+        };
+        console.log(senddata);
+
+        $.ajax({
+            type: 'POST',
+            url: 'https://sdcentro.surtidoradepartamental.com:8077/ServiciosKosmos/api/auth/Login',
+            contentType: "application/json",
+            data: JSON.stringify(senddata),
+            success: function (respuesta) {
+                let token = respuesta["token"];
+                if (token == '') {
+                    alert("Autenticacion falló");
+                } else {
+                    sessionStorage.setItem("token", token);
+                    window.location.href = "../Crud";
+                }
+            },
+            error: function () {
+                alert("Algo salio Mal");
+            }
+        });
+
+
+
+    }
 </script>

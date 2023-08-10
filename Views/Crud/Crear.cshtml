@@ -64,6 +64,7 @@
             type: 'POST',
             url: '/PersonaApi/NuevaPersona',
             data: JSON.stringify(senddata),
+            headers: { 'Authorization': '7877777777777777' },
             success: function (data) {
                 let respuesta = JSON.parse(data);
                 crearAlerta(respuesta["Id"], respuesta["Mensaje"]);
